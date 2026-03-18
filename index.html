@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Video a TikTok</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 48 48" width="40" height="40">
+                    <path fill="#25F4EE" d="M9.875 23.125V21.25c-.625-.125-1.375-.125-2-.125C3.5 21.125 0 24.75 0 29.25c0 2.75 1.375 5.25 3.5 6.75-.875-1.25-1.375-2.875-1.375-4.5 0-4.375 3.375-8 7.75-8.375z"/>
+                    <path fill="#25F4EE" d="M10.125 33.875c2.125 0 3.875-1.625 4-3.75V2.125h3.5C17.5 1.5 17.375.75 17.375 0h-4.75v27.875c-.125 2.125-1.875 3.75-4 3.75-.625 0-1.25-.125-1.75-.375.75 1 1.875 1.625 3.25 1.625zM33.25 8.625v-1.75c-1.5 0-2.875-.375-4.125-1.125 1 1.25 2.375 2.125 4.125 2.875z"/>
+                    <path fill="#FE2C55" d="M29.125 5.75c-1.125-1.25-1.75-2.875-1.875-4.625h-1.5c.375 2 1.5 3.75 3.375 4.625z"/>
+                    <path fill="#FE2C55" d="M7.875 25.25c-2.25 0-4 1.75-4 4 0 1.5.875 2.875 2.125 3.5-.375-.625-.625-1.25-.625-2 0-2.25 1.75-4 4-4 .375 0 .875.125 1.25.25v-4.875c-.625-.125-1.375-.125-2-.125h-.25v3.625c-.375-.25-.875-.375-1.5-.375z"/>
+                    <path fill="#FE2C55" d="M33.25 8.625v3.625c-2.875 0-5.5-1-7.625-2.625v11.75c0 5.875-4.75 10.625-10.625 10.625-2.25 0-4.375-.75-6.125-2 2 2.25 4.875 3.625 8.125 3.625 5.875 0 10.625-4.75 10.625-10.625V11.25c2.125 1.625 4.75 2.625 7.625 2.625V8.75c-.75 0-1.375-.125-2-.125z"/>
+                    <path fill="white" d="M25.625 21.375V9.625c2.125 1.625 4.75 2.625 7.625 2.625V8.625c-1.75-.75-3.125-1.625-4.125-2.875-1.875-.875-3-2.625-3.375-4.625h-3.5v28c-.125 2.125-1.875 3.75-4 3.75-1.375 0-2.5-.625-3.25-1.625-1.25-.625-2.125-2-2.125-3.5 0-2.25 1.75-4 4-4 .375 0 .875.125 1.25.25V22.5h-.25c-5.875 0-10.625 4.75-10.625 10.625 0 2.75 1.125 5.375 3 7.25-2 .125-3.5-.125-3.5-.125S0 36.5 0 29.25c0-4.5 3.5-8.125 7.875-8.125.625 0 1.375 0 2 .125v-1.875c-4.375.375-7.75 4-7.75 8.375 0 1.625.5 3.25 1.375 4.5C5.5 34 8 35.25 10.625 35.25c5.875 0 10.625-4.75 10.625-10.625V13.5"/>
+                </svg>
+                <h1>Subir Video a TikTok</h1>
+            </div>
+            <p class="subtitle">Sube tu video al buzón de TikTok para publicarlo</p>
+        </header>
+
+        <form id="uploadForm">
+            <!-- Upload method -->
+            <div class="form-group">
+                <label>Método de subida</label>
+                <div class="toggle-group">
+                    <button type="button" class="toggle-btn active" data-method="file">Subir archivo</button>
+                    <button type="button" class="toggle-btn" data-method="url">URL del video</button>
+                </div>
+            </div>
+
+            <!-- File upload -->
+            <div class="form-group" id="fileUploadGroup">
+                <label for="videoFile">Video</label>
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p>Arrastra tu video aquí o <span class="browse-link">selecciona un archivo</span></p>
+                        <span class="hint">MP4, WebM - Máx. 50MB</span>
+                    </div>
+                    <div class="file-preview hidden" id="filePreview">
+                        <video id="videoPreview" muted></video>
+                        <div class="file-info">
+                            <span id="fileName"></span>
+                            <span id="fileSize"></span>
+                            <button type="button" id="removeFile" class="btn-remove">&times;</button>
+                        </div>
+                    </div>
+                    <input type="file" id="videoFile" accept="video/mp4,video/webm" hidden>
+                </div>
+            </div>
+
+            <!-- URL input -->
+            <div class="form-group hidden" id="urlUploadGroup">
+                <label for="videoUrl">URL del video</label>
+                <input type="url" id="videoUrl" placeholder="https://ejemplo.com/mi-video.mp4">
+                <span class="hint">URL pública del video (dominio verificado en TikTok)</span>
+            </div>
+
+            <!-- Title -->
+            <div class="form-group">
+                <label for="title">Título</label>
+                <input type="text" id="title" placeholder="Título de tu video" maxlength="150">
+                <div class="char-count"><span id="titleCount">0</span>/150</div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">Descripción</label>
+                <textarea id="description" placeholder="Describe tu video... #hashtags @menciones" rows="4" maxlength="2200"></textarea>
+                <div class="char-count"><span id="descCount">0</span>/2200</div>
+            </div>
+
+            <!-- Publish mode -->
+            <div class="form-group">
+                <label>Modo de publicación</label>
+                <div class="toggle-group">
+                    <button type="button" class="toggle-btn publish-btn active" data-publish="direct">Publicar directamente</button>
+                    <button type="button" class="toggle-btn publish-btn" data-publish="inbox">Enviar a bandeja</button>
+                </div>
+                <span class="hint" id="publishHint">El video se publicará automáticamente en TikTok (visibilidad: solo tú, hasta que TikTok audite la app)</span>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="btn-text">Enviar a TikTok</span>
+                <span class="btn-loading hidden">
+                    <span class="spinner"></span> Subiendo...
+                </span>
+            </button>
+        </form>
+
+        <!-- Status -->
+        <div class="status-panel hidden" id="statusPanel">
+            <div class="status-icon" id="statusIcon"></div>
+            <h3 id="statusTitle"></h3>
+            <p id="statusMessage"></p>
+            <div class="status-progress hidden" id="statusProgress">
+                <div class="progress-steps">
+                    <div class="step active" id="stepUpload">
+                        <div class="step-dot"></div>
+                        <span>Subido</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="stepProcessing">
+                        <div class="step-dot"></div>
+                        <span>Procesando</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="stepReady">
+                        <div class="step-dot"></div>
+                        <span>Listo</span>
+                    </div>
+                </div>
+            </div>
+            <div class="publish-id hidden" id="publishIdContainer">
+                <span>Publish ID:</span>
+                <code id="publishId"></code>
+            </div>
+            <button type="button" class="btn-new hidden" id="newUploadBtn">Subir otro video</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
